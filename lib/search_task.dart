@@ -15,8 +15,12 @@ class searchingtask extends StatefulWidget {
 class _searchingtaskState extends State<searchingtask> {
   late String selectedDate = "";
   TextEditingController data = TextEditingController();
+  Map<String, List<Map<String, dynamic>>> tasksBySubject = {};
   List<List<Map<String, dynamic>>> tasksList = [];
 void fetchAndOrganizeTasksByDateForStudent(String insertDateString) {
+  setState(() {
+    tasksBySubject.clear(); // Clear previous tasks
+  });
   DatabaseReference dbrf = FirebaseDatabase.instance
       .ref()
       .child("Student")
@@ -28,8 +32,6 @@ void fetchAndOrganizeTasksByDateForStudent(String insertDateString) {
           dataSnapshot.value as Map<dynamic, dynamic>?;
 
       if (dataMap != null) {
-        Map<String, List<Map<String, dynamic>>> tasksBySubject = {};
-
         dataMap.forEach((subject, tasks) {
           if (tasks is Map) {
             List<Map<String, dynamic>> filteredTasks = [];
@@ -49,22 +51,13 @@ void fetchAndOrganizeTasksByDateForStudent(String insertDateString) {
             }
           }
         });
-
-        // Print the organized tasks
-        tasksBySubject.forEach((subject, tasks) {
-          print('$subject: $tasks');
-        });
-
-        // Print additional information
-        print("Date: $insertDateString");
+        print(tasksBySubject);
         print("Tasks organized by subject and filtered by date.");
       }
     }
   });
 }
 
-
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,48 +137,60 @@ void fetchAndOrganizeTasksByDateForStudent(String insertDateString) {
                 ),
               ],
             ),
-            // Expanded(
-            //   child: ListView.builder(
-            //     itemCount: tasksList.length,
-            //     itemBuilder: (context, index) {
-            //       String subject = tasksList[index].keys.first;
-            //       List<Map<dynamic, dynamic>> tasks = tasksList[index][subject];
-            //       return Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           Padding(
-            //             padding:
-            //                 EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            //             child: Text(
-            //               subject,
-            //               style: TextStyle(
-            //                   fontSize: 20, fontWeight: FontWeight.bold),
-            //             ),
-            //           ),
-            //           ListView.builder(
-            //             shrinkWrap: true,
-            //             physics: NeverScrollableScrollPhysics(),
-            //             itemCount: tasks.length,
-            //             itemBuilder: (context, index) {
-            //               Map<String, dynamic> task = tasks[index];
-            //               return ListTile(
-            //                 title: Text(task['task']),
-            //                 subtitle: Text(task['date']),
-            //                 trailing: Checkbox(
-            //                   value: task['done'],
-            //                   onChanged: (value) {
-            //                     // Handle checkbox change
-            //                   },
-            //                 ),
-            //               );
-            //             },
-            //           ),
-            //           Divider(height: 1, color: Colors.grey),
-            //         ],
-            //       );
-            //     },
-            //   ),
-            // ),
+            Expanded(
+  child: tasksBySubject.isEmpty
+      ? Center(child: Text('No tasks on this day'))
+      : ListView.builder(
+          itemCount: tasksBySubject.length,
+          itemBuilder: (BuildContext context, int index) {
+            String subject = tasksBySubject.keys.elementAt(index);
+            List<Map<String, dynamic>> tasks = tasksBySubject[subject]!;
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: const Color.fromARGB(255, 255, 237, 194),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      subject,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: tasks.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Map<String, dynamic> task = tasks[index];
+                      String taskName = task['task'];
+                      String taskDate = task['date'];
+
+                      return ListTile(
+                        title: Text(taskName),
+                        subtitle: Text('Date: $taskDate'),
+                        // Add more onTap functionality if needed
+                        onTap: () {
+                          // Handle onTap if required
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+),
+
           ],
         ),
       ),

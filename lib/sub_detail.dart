@@ -332,7 +332,7 @@ class _subjectdetailState extends State<subjectdetail> {
                 margin: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                 child: Text(
                   "Hi! ${widget.studentName} ${widget.subjectName}'s Tasks",
-                  style: const TextStyle(fontSize: 25, color: Colors.white),
+                  style: const TextStyle(fontSize: 25, color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
               const SizedBox(
@@ -347,7 +347,7 @@ class _subjectdetailState extends State<subjectdetail> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(
+                        Color.fromARGB(
                             255, 255, 201, 219)), // Change color here
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(

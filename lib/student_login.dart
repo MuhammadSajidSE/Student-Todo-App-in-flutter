@@ -65,7 +65,7 @@ void checkStudentName() {
               padding: const EdgeInsets.only(left: 35, top: 130),
               child: const Text(
                 'Welcome\nStudent Task',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 33),
               ),
             ),
             SingleChildScrollView(

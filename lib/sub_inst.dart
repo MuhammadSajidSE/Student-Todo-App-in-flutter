@@ -91,10 +91,10 @@ class _subjectsState extends State<subjects> {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                margin: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                 child: Text(
-                  "Hi! ${widget.stduentname}",
-                  style: TextStyle(fontSize: 25, color: Colors.white),
+                  "Hi! ${widget.stduentname} how are You?",
+                  style: const TextStyle(fontSize: 25, color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
               Container(
@@ -114,19 +114,18 @@ class _subjectsState extends State<subjects> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
-                height: 0,
+                height: 50,
                 width: 300,
                 child: ElevatedButton(
                   onPressed: addSubject,
-                  child: Text("Add New Subject"),
+                  child: const Text("Add New Subject",style: TextStyle(fontSize: 20),),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromARGB(
-                            255, 255, 201, 219)), // Change color here
+                        const Color.fromARGB(255, 255, 177, 203)), // Change color here
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -135,7 +134,7 @@ class _subjectsState extends State<subjects> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -151,11 +150,10 @@ class _subjectsState extends State<subjects> {
                       ),
                     );
                   },
-                  child: Text("Searching Task"),
+                  child: const Text("Searching Task",style: TextStyle(fontSize: 20),),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromARGB(
-                            255, 255, 201, 219)), // Change color here
+                        const Color.fromARGB(255, 255, 177, 203)), // Change color here
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -172,22 +170,22 @@ class _subjectsState extends State<subjects> {
                       child: Center(
                           child: Container(
                         decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 255, 239, 194),
+                            color: const Color.fromARGB(255, 255, 239, 194),
                             borderRadius: BorderRadius.circular(15)),
                         width: 400,
                         height: 60,
                         margin:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                            const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                         child: ListTile(
                           title: Text(
                             subjectKeys.elementAt(index),
-                            style: TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 20),
                           ),
                           trailing: IconButton(
                               onPressed: () {
                                 deleteSubject(subjectKeys.elementAt(index));
                               },
-                              icon: Icon(Icons.delete)),
+                              icon: const Icon(Icons.delete)),
                         ),
                       )),
                       onTap: () {
